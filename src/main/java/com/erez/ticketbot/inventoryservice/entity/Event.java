@@ -1,40 +1,37 @@
 package com.erez.ticketbot.inventoryservice.entity;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Document(collection = "events")
+@Data
+@Builder
 @NoArgsConstructor
-@Table(name = "event")
+@AllArgsConstructor
 public class Event {
+
     @Id
-    @Column(name = "id")
+    private String mongoId;
+
+    @Indexed(unique = true)
     private Long id;
 
-    @Column(name = "name")
+    @Indexed
     private String name;
 
-    @Column(name = "total_capacity")
     private Long totalCapacity;
 
-    @Column(name = "left_capacity")
+    @Indexed
     private Long leftCapacity;
 
-    @Column(name = "ticket_price")
     private BigDecimal ticketPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "venue_id")
     private Venue venue;
-
-
-
 }
